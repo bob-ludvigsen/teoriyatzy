@@ -6,10 +6,11 @@ Quizzes = new Meteor.Collection('quizzes');
 Categories = new Meteor.Collection('categories');
 Gamedata = new Meteor.Collection('gamedata');
 Winlist = new Meteor.Collection('winlist');
-Singleplayer = new Meteor.Collection('singleplayer');
+
 //Users = new Meteor.Collection('users');
 Items = new Mongo.Collection('items');
 Uploads = new Mongo.Collection('uploads');
+Theoretics = new Mongo.Collection('theoretics');
 
 Uploads.allow({
     insert: function (userId, doc) {

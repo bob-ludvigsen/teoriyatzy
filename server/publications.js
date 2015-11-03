@@ -6,6 +6,11 @@ Meteor.publish('quizzes', function(){
 
 });
 
+Meteor.publish('theoretics', function(){
+   return Theoretics.find();
+
+});
+
 Meteor.publish('categories', function(){
     return Categories.find();
 
@@ -15,10 +20,7 @@ Meteor.publish('gamedata', function(){
     return Gamedata.find();
 
 });
-Meteor.publish('singleplayer', function(){
-    return Singleplayer.find();
 
-});
 
 Meteor.publish('users', function(){
     return users.find();
