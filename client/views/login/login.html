@@ -1,0 +1,178 @@
+<template name="login">
+    <div class="fade-in one">
+        <div class="col-md-12 blueheader">
+        <!-- <h3 class="text-center">Login</h3>
+
+             <div class="row">
+                 <div class="col-xs-12 col-md-5 col-md-offset-3">
+
+
+
+
+
+                 </div>
+             </div>-->
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+
+
+                    {{#if currentUser}}
+                        <!--  Vis profil så den kan redigeres -->
+                        <h1 class="white-text">Min Profil profile</h1>
+
+                    {{else}}
+
+                        {{#if toggleLogin}}
+
+
+
+                                <form id="login-form" class="form-signin">
+                                    <h2 class="form-signin-heading">{{_ "logon"}}</h2>
+                                    <label for="inputEmail" class="sr-only">Email</label>
+                                    <input type="email" id="inputEmail" class="form-control" placeholder="Email adresse"
+                                           required autofocus>
+                                    <label for="inputPassword" class="sr-only">{{_ "passwd"}}</label>
+                                    <input type="password" id="inputPassword" class="form-control"
+                                           placeholder={{_ "passwd"}} required>
+                                    <br/>
+                                    <button class="btn btn-lg btn-primary" type="submit">{{_ "logon"}}</button>
+
+                                    <button class="btn btn-lg btn-primary" id="register">{{_ "account"}}</button>
+                                    <button class="btn btn-lg btn-primary" id="forgot">{{_ "forgot"}}</button>
+
+                                    <!--  <p><span id="register">Ikke oprettet? klik her</span></p>-->
+                                </form>
+
+                            <!-- /container -->
+
+
+                        {{else}}
+
+                            <h2 class="form-signin-heading">Opret bruger</h2>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast
+                                                en gyldig emailadresse
+                                            </div>
+                                            <label for="input-username">Email</label>
+
+                                            <div class="input-group">
+
+                                                <input type="text" class="form-control" id="input-email"
+                                                       value="{{email}}" placeholder="Email">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Det er ikke et gyldigt brugernavn
+                                            </div>
+                                            <label for="input-username">Brugernavn</label>
+
+                                            <div class="input-group">
+
+                                                <input type="text" class="form-control" id="input-username"
+                                                       value="{{user.username}}" placeholder="Brugernavn">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast et gyldigt fornavn
+                                            </div>
+                                            <label for="input-username">Fornavn</label>
+
+                                            <div class="input-group">
+
+                                                <input type="text" class="form-control" id="input-firstname"
+                                                       value="{{user.profile.firstname}}" placeholder="Fornavn">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast et gyldigt efternavn
+                                            </div>
+                                            <label for="input-username">Efternavn</label>
+
+                                            <div class="input-group">
+
+                                                <input type="text" class="form-control" id="input-lastname"
+                                                       value="{{user.profile.lastname}}" placeholder="Efternavn">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast gyldig adgangskode
+                                            </div>
+                                            <label for="input-username">Adgangskode</label>
+
+                                            <div class="input-group">
+
+                                                <input type="password" id="account-password" class="form-control"
+                                                        placeholder="Adgangskode">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12 col-md-5">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast gyldigt værn
+                                            </div>
+                                            <label for="input-username">Værn</label>
+
+                                            <div class="input-group">
+
+                                                <input type="text" class="form-control" id="input-service"
+                                                       value="{{user.profile.Service}}"
+                                                       placeholder="Værn (Hæren,Søværnet Flyvevåbnet)">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                           <!-- <button type="button" data-dismiss="modal" class="btn btn-lg btn-danger cancel">Fortryd
+                            </button>-->
+
+                            <button type="button" class="btn btn-lg btn-primary" id="create-user">Opret bruger</button>
+                            <button class="btn btn-lg btn-primary" id="login">Er allerede oprettet!</button>
+                        {{/if}}
+
+                        <br/><br/>
+
+
+                    {{/if}}
+
+
+
+            </div>
+
+                {{#if currentUser}}
+                    <li><a href="#" id="signOut">Sign Out</a></li>
+                {{/if}}
+
+        </div>
+        <div class="row">
+            <div class="login"><a href="{{pathFor 'menu'}}" class="btn btn-grey" role="button"><H2>Return to
+                menu</H2></a></div>
+        </div>
+            <div class="spacer"></div>
+</div>
+    </div>
+
+</template>

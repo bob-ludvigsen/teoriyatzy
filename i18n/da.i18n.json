@@ -1,0 +1,18 @@
+{ "hello": "Hej der",
+  //Menu template
+  "edit_profile": "Rediger profil",
+  "logon-register": "Log på eller opret bruger",
+  "game_admin": "Spil administration",
+  "hall_off_fame": "Hall Of Fame",
+  "my_status": "Min status",
+  "my_games": "Mine spil",
+  "instr": "Instruktioner",
+  //Log on template
+  "logon": "Log ind",
+  "account": "Endnu ikke oprettet?",
+  "passwd": "Adgangskode",
+  "email": "Email adresse",
+  "forgot": "Glemt adgangskode?"
+
+}
+//Log på eller opret bruger Adgangskode

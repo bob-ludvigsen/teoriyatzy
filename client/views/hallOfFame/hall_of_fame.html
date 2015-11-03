@@ -1,0 +1,67 @@
+<template name="halloffame">
+
+    <div class="row fade-in one">
+        <div class="row">
+            <div class="col-md-12 blueheader">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2 white-text">
+                        <h2>HALL OF FAME</h2>
+                    </div>
+                  <!--  <img src="graphics/SVNQuizLogo192.png" class="img-responsive pull-right" alt="Responsive image">-->
+
+                </div>
+
+
+                <div class="col-xs-12 col-md-12 white-text">
+
+                            <table class="tablecenter table-bordered">
+
+                                <th class="hall-of-fame-table table-bordered"></th>
+                                <th class="hall-of-fame-table table-bordered">Status</th>
+                                <th class="hall-of-fame-table table-bordered">Username</th>
+                                <th class="hall-of-fame-table table-bordered">Number of wins</th>
+
+                                {{#each myStats}}
+                                    <tr>
+                                        {{> halloffamelist}}
+                                    </tr>
+
+                                {{/each}}
+                            </table>
+                    <br/><br/>
+
+
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-xs12 col-md-12 text-center"><a href="{{pathFor 'menu'}}" class="btn btn-grey"
+                                                                   role="button"><H2>Return to menu</H2></a>
+                        <br/><br/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</template>
+
+<template name="halloffamelist">
+
+
+
+    <td class="hall-of-fame-table hall-of-fame table-bordered"><img src="levelON.png" class="img-responsive hall-of-fame"
+                                        alt="Responsive image">
+     </td>
+    <td class="hall-of-fame-table table-bordered">{{myStatus}}</td>
+    <td class="hall-of-fame-table table-bordered">{{username}}</td>
+    <td class="hall-of-fame-table table-bordered">{{svnquiz}} wins</td>
+
+
+
+</template>
+

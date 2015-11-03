@@ -1,0 +1,20 @@
+{
+  "hello": "Hey there",
+  //Menu template
+  "edit_profile": "Edit profile",
+  "logon-register": "Log on or register",
+  "game_admin": "Game administration",
+  "hall_off_fame": "Hall Of Fame",
+  "my_status": "My status",
+  "my_games": "My games",
+  "instr": "Instructions",
+  //Log on template
+  "logon": "Login",
+  "account": "Need an account?",
+  "passwd": "Password",
+  "email": "Email address",
+  "forgot": "Forgot password?"
+
+}
+
+

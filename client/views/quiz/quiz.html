@@ -1,0 +1,91 @@
+<Template name="quiz">
+
+
+    <div class="row-fluid"> {{> feedback}} </div>
+
+    <div class="row fade-in one autoheight">
+        <div class="col-xs-8 col-md-8 ">
+
+            <h3>
+                {{quizes.question}}
+            </h3>
+
+            <div class="wait-text">
+
+                <h2>Read/listen to the question. When the possible answers appear below, you have 15 seconds to choose
+                    the right one!</h2>
+
+            </div>
+<fieldset>
+            <form class="form-horizontal hide-div">
+
+                <div class="radio radio-primary">
+
+                    <input type="radio" id="radio1" name="answers"
+                           value="ansver1"/>
+
+                    <label for="radio1">
+                      <b>  {{quizes.answer_0}}</b>
+                    </label>
+                </div>
+                <div class="radio radio-primary">
+
+                    <input type="radio" id="radio2" name="answers"
+                           value="ansver2"/>
+
+                    <label for="radio2">
+                        <b>{{quizes.answer_1}}</b>
+
+                    </label>
+                </div>
+                <div class="radio radio-primary">
+                    <input type="radio" id="radio3" name="answers"
+                           value="ansver3"/>
+                    <label for="radio3" >
+                        <b>{{quizes.answer_2}}</b>
+                    </label>
+                </div>
+                <div class="radio radio-primary">
+                    <input type="radio" id="radio4" name="answers"
+                           value="ansver4"/>
+                    <label for="radio4" >
+                       <b>{{quizes.answer_3}}</b>
+                    </label>
+                </div>
+
+                <br/><br/>
+
+                <div>
+                    <div class="col-xs-3 col-md-2">
+                        <button class="timer" id="ansver">Select</button>
+                    </div>
+                    <div class="col-xs-5 col-md-3 timer ">
+                        <div>Time left: {{time}}</div>
+                    </div>
+
+
+                </div>
+            </form>
+
+</fieldset>
+        </div>
+        <audio autobuffer="autobuffer" id="question">
+            {{playSound}}
+
+            <!--<source src="{{quizes.audioquestion}}" >-->
+
+            <!-- <source src="/1902.mp3" type="audio/mpeg">-->
+
+            Your browser does not support the audio element.
+        </audio>
+        <div class="col-xs-4 col-md-4">
+
+            <img src="{{quizes.logo}}">
+
+        </div>
+
+    </div>
+
+
+</Template>
+

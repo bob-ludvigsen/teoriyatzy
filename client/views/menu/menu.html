@@ -1,0 +1,38 @@
+<template name="menu">
+<div class="fade-in one">
+
+    <div class="row">
+        <div class="col-md-12 blueheader white-text">
+            <h1>TEORI YATZY</h1>
+
+          <!--  <img src="graphics/dnk.gif" class="img-responsive pull-right" alt="Responsive image">-->
+
+        </div>
+    </div>
+    <div class="row">
+
+        <!--login er rettet i login_buttons_dropdown.html-->
+       <!-- <div class="col-xs12 col-md-6"><a href="#" class="btn btn-oldstyle btn-block" id="login" role="button"><H2>LOGIN</H2></a></div>-->
+        {{#if currentUser}}
+            <div class="col-xs12 col-md-6"><a href="{{pathFor 'login'}}" class="btn btn-grey" id="login" role="button"><H2>{{_ "edit_profile"}}</H2></a></div>
+        {{else}}
+            <div class="col-xs12 col-md-6"><a href="{{pathFor 'login'}}" class="btn btn-grey" id="login" role="button"><H2>{{_ "logon-register"}}</H2></a></div>
+        {{/if}}
+
+
+        <div class="col-xs12 col-md-6"><a href="{{pathFor 'inviteplayer'}}" class="btn btn-grey" role="button"><H2>{{_ "game_admin"}}</H2></a></div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs12 col-md-6"><a href="{{pathFor 'halloffame'}}" class="btn btn-grey" role="button">  <H2>{{_ "hall_off_fame"}}</H2></a></div>
+        <div class="col-xs12 col-md-6"><a href="{{pathFor 'mystatus'}}" class="btn btn-grey" role="button"> <H2>{{_ "my_status"}}</H2></a></div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs12 col-md-6"><a href="{{pathFor 'mygames'}}" class="btn btn-grey" role="button"> <H2>{{_ "my_games"}}</H2></a></div>
+        <div class="col-xs12 col-md-6"><a href="{{pathFor 'instructions'}}" class="btn btn-grey" role="button"><H2>{{_ "instr"}}</H2></a></div>
+
+
+    </div>
+</div>
+</template>
