@@ -15,3 +15,4 @@ var lang = window.navigator.language;
         TAPi18n.setLanguage('en')
     }
 });
+

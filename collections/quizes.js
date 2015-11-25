@@ -12,6 +12,16 @@ Items = new Mongo.Collection('items');
 Uploads = new Mongo.Collection('uploads');
 Theoretics = new Mongo.Collection('theoretics');
 
+Theoretics.allow({
+    insert: function (userId, doc) {
+        return true;
+    },
+    update: function (userId, doc, fields, modifier) {
+        return true
+    }
+});
+
+
 Uploads.allow({
     insert: function (userId, doc) {
         return true;
@@ -20,6 +30,7 @@ Uploads.allow({
         return true
     }
 });
+
 Gamedata.allow({
     insert: function(userId, file) {
         //console.log('Gamedata insert ' +userId);

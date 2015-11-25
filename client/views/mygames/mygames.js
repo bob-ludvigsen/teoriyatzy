@@ -22,64 +22,11 @@ Template.mygames.helpers({
     myself: function (userId) {
         return Meteor.userId() === userId;
     },
-    myactivegames: function () {
-        var player = Meteor.userId();
+    mygames: function () {
+        var user = Meteor.userId();
+        var games = Quizzes.find({'players': user});
+        return games;
 
-        var myinvites = Gamedata.find({
-            $and: [
-                {$or: [{player2_id: player}, {player1_id: player}]},
-                {$or: [{accepted: true}]},
-                {$or: [{finished: 0}]}
-
-            ]
-        }).fetch();
-
-// itererer alle spil og deaktiverer alle der har været inaktive i 21 dage den spiller der har flest points vinner spillet
-
-        var curdate = new Date().getTime();
-
-        for (var key in myinvites) {
-            if (myinvites.hasOwnProperty(key)) {
-                var obj = myinvites[key];
-                for (var prop in obj) {
-                    if (obj.hasOwnProperty(prop)) {
-
-                        if (prop === 'update') {
-                            var gamedate = obj['update'];
-                            var diffDays = parseInt((curdate - gamedate) / (1000 * 60 * 60 * 24));
-                            if(diffDays > 21){
-
-                                var gameId = obj['_id'];
-                                Gamedata.update({_id: gameId}, {$set: {finished: 1}});
-
-                                var scorep1 = obj['scorep1'];
-                                var scorep2 = obj['scorep2'];
-
-                                if (scorep1 > scorep2) {
-
-                                    // svnquiz er sat midlertidigt indtil hoved spil generatoren er implementeret
-                                    var player_1 = obj['player1_id'];
-
-                                    var player_2 = obj['player2_id'];
-
-                                    Meteor.call('insertWinner', player_1, 'svnquiz');
-                                }
-                                else if (scorep2 > scorep1) {
-
-                                    Meteor.call('insertWinner', player_2, 'svnquiz');
-                                }
-
-
-                            }
-                            //console.log(prop + " = " + obj[prop]+ "  the id  " + obj['_id']);
-                        }
-
-                    }
-                }
-            }
-        }
-
-        return myinvites;
 
 
     }
@@ -90,22 +37,23 @@ Template.mygames.events({
 
     'click #playgame': function (e, template) {
         e.preventDefault();
-        Session.set("playgame", this._id);
+        console.log(this._id);
+        Session.setPersistent("playgame", this._id);
         Router.go('board');
     },
-    'click .singleplayer': function (e, template) {
+    'click #joinagame': function (e, tmpl) {
         //console.log(this._id);
         e.preventDefault();
-        var invitedId = this._id;
-        //alert('virker')
-        Meteor.call('singlePlayer', invitedId, function (error, id) {
-            if (error){
+        var invitedId = Meteor.userId();
+        var gameId = tmpl.find('#input-game').value;
+
+
+        Meteor.call('joinGame', gameId, invitedId, function (error, id) {
+            if (error) {
                 return alert(error.reason);
             }
-            else{
-                //alert(id)
-                Session.set("singleplayergame", id);
-                Router.go('singleplayer');
+            else {
+                $("#jointhegame").modal("hide");
             }
         })
 

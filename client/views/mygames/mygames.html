@@ -4,21 +4,26 @@
             <div class="col-md-12 blueheader">
                 <div class="row">
 
-                   <!-- <img src="graphics/SVNQuizLogo192.png" class="img-responsive pull-right" alt="Responsive image">-->
+
                 </div>
 
                 <div class="row">
 
                     <div class="col-xs-6 col-md-6 white-text">
-                        <h3>Your active games:</h3>
+                        <h3>Spil du er tilmeldt:</h3>
                         {{#if currentUser}}
-                            <ul class="transparant">
-                                {{#each myactivegames}}
-                                    {{#unless myself _id}}
-                                        {{> mygameslist}}
-                                    {{/unless}}
+                            <button class="btn btn-default" type="button" data-toggle="modal" href="#jointhegame">Tilmeld dig til et spil</button>
+
+                            <br/><br/>
+
+                            <ul>
+                                {{#each mygames}}
+                                    <li id="playgame">  {{name}} {{_id}}
+                                    </li>
                                 {{/each}}
                             </ul>
+
+
                         {{else}}
                             <h3>You must be logged in to view </h3>
                         {{/if}}
@@ -42,6 +47,9 @@
             </div>
         </div>
     </div>
+
+    {{> joinGameModal}}
+
 </template>
 
 

@@ -1,0 +1,100 @@
+<template name="gameadmin">
+    <div class="fade-in one">
+        <div class="col-md-12 blueheader">
+            <!--<div class="row">
+                <img src="graphics/SVNQuizLogo192.png" class="img-responsive pull-right" alt="Responsive image">
+            </div>-->
+            <div class="row">
+                <div class="col-xs-12 col-md-8 ">
+                    <h3 class="text-center">Teoretikere {{theory.name}}</h3>
+
+                    {{#if currentUser}}
+
+                        <button class="btn btn-default" type="button" data-toggle="modal" href="#createtheory">Opret teori</button>
+
+                        <table class='table'>
+                            <thead>
+                            <tr>
+                                <th>Redigering af teorier</th>
+                                <th>Teoretiker</th>
+                                <th>Teori</th>
+                                <th>Vægtning</th>
+                                <th>Oprettet af</th>
+                                <th>Oprettet dato</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each theorys}}
+                                <tr class="">
+                                    <td>
+
+                                        <a href="#"  id="deletequestion">Slet</a><br/>
+                                        <a href="{{pathFor 'editquestion'}}">Rediger</a>
+                                        <!--  <a href="{{pathFor 'editquestion'}}" id="updatequestion" class="glyphicon glyphicon-pencil clickable updatequestion"></a>
+-->
+
+                                    </td>
+
+                                    <td>{{name}}</td>
+                                    <td>{{theory}}</td>
+                                    <td>{{weight}}</td>
+                                    <td>{{owner}}</td>
+                                    <td>{{created}}</td>
+
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+
+                    {{else}}
+                        <h3>You must be logged in to invite </h3>
+                    {{/if}}
+                </div>
+
+
+                <div class="col-xs-12 col-md-3 white-text">
+                    <h3 class="text-center">Opret spil</h3>
+
+                    <!--<p>Wait for the person to accept your invitation, then play the game.</p>-->
+
+                    {{#if currentUser}}
+                        <button class="btn btn-default" type="button" data-toggle="modal" href="#creategame">Opret spil</button>
+
+                        <br/><br/>
+
+                        <ul>
+                            {{#each games}}
+                                <li>  {{name}} {{_id}}
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{else}}
+                        <h3>You must be logged in to create a game </h3>
+                    {{/if}}
+                </div>
+
+            </div>
+            <br/><br/><br/><br/>
+
+            <div class="row">
+                <div class="col-xs12 col-md-12 text-center"><a href="{{pathFor 'menu'}}"
+                                                               class="btn btn-grey" role="button"><H2>
+                    Return to menu</H2></a>
+                    <br/><br/>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    {{> createTheoryModal}}
+    {{> createGameModal}}
+</template>
+
+
+
+

@@ -5,122 +5,22 @@
 
 
 Meteor.methods({
-    game: function (id) {
-        var inviter = Meteor.userId();
-        var invited = Meteor.users.findOne({_id: id});
-
-
-        // ensure the user is logged in
-        if (!inviter)
-            throw new Meteor.Error(401, "Du skal være logget ind for at invitere");
-
-        //generer 5 tilfældige tal ml 1 og 49 til at placere bonus tiles på
-        var arr = []
-        while(arr.length < 5){
-            var randomnumber=Math.ceil(Math.random()*49)
-
-            var a = arr.indexOf(randomnumber);
-
-            if ( a === -1 ) {
-
-                arr.push(randomnumber);
-
-            }
 
 
 
-        }
-        //console.log(arr);
+    createTheory: function(name, theory, weight,owner){
 
-         var gameid = Gamedata.insert({
-             "player1_id": inviter,
-             //"player1": Meteor.user().emails[0].address,
-             //"player2_id": invited._id,
-             "player1": Meteor.user().username,
-             "player2_id": invited._id,
-             "player2": invited.username,
-             "notificationPla1": true,
-             "notificationPla2": true,
-             "tilesp1":[],
-             "tilesp2":[],
-             "scorep1": 0,
-             "scorep2": 0,
-             "questionsp1":[],
-             "questionsp2":[],
-             "turn": 0,
-             "pending":true,
-             "accepted":false,
-             "rejected":false,
-             "submitted": new Date().getTime(),
-             "finished":0,
-             "count":0,
-             "bonustile": arr
-         });
-
-        return gameid;
-
-        //send en mail til den der er blevet inviteret..
-    },
-    singlePlayer: function (id) {
-        var inviter = Meteor.userId();
-
-        // ensure the user is logged in
-        if (!inviter)
-            throw new Meteor.Error(401, "Du skal være logget ind for at invitere");
-
-        //generer 5 tilfældige tal ml 1 og 49 til at placere bonus tiles på
-        var arr = []
-        while(arr.length < 5){
-            var randomnumber=Math.ceil(Math.random()*49)
-
-            var a = arr.indexOf(randomnumber);
-
-            if ( a === -1 ) {
-
-                arr.push(randomnumber);
-
-            }
-
-
-
-        }
-        //console.log(arr);
-
-        var gameid = Singleplayer.insert({
-            "player1_id": inviter,
-            "player1": Meteor.user().username,
-            "tilesp1":[],
-            "scorep1": 0,
-            "questionsp1":[],
-            "pending":true,
-            "accepted":false,
-            "rejected":false,
-            "submitted": new Date().getTime(),
-            "finished":0,
-            "count":0,
-            "bonustile": arr
+        var theoreticId = Theoretics.insert({
+            "name": name,
+            "theory": theory,
+            "weight": weight,
+            "owner": owner,
+            "created":new Date().getTime()/*,
+            "active": active*/
         });
-
-        return gameid;
+        return theoreticId;
     },
-    editquestion: function(id, cat, quest, answ0, answ1, answ2, answ3, cor, radios){
-
-        console.log('Data gemt' + id + cat + quest + answ0 + answ1 + answ2 + answ3 + cor + radios)
-
-        Quizzes.update({_id:id}, {$set:{
-            "category": cat,
-            "question":quest,
-            "answer_0": answ0,
-            "answer_1": answ1,
-            "answer_2": answ2,
-            "answer_3": answ3,
-            "correct": cor,
-            "active": radios
-        }});
-
-
-    },
-    createquestion: function(cat, created, active){
+    editTheory: function(cat, created, active){
 
         var quizId = Quizzes.insert({
             "category": cat,
@@ -128,12 +28,29 @@ Meteor.methods({
             "active": active});
         return quizId;
     },
+    createGame: function(gameName,owner){
 
-    addcategory: function(cat) {
+        var gameId = Quizzes.insert({
+            "name": gameName,
+            "owner": owner,
 
-        Categories.insert({'category': cat});
+            "created":new Date().getTime()
 
+        });
+        return gameId;
     },
+    joinGame: function(gameID, owner){
+
+        var gameId = Quizzes.update({_id: gameID}, {"$push":{"players":owner}});
+        return gameId;
+    },
+    startGame: function(gameID, owner){
+
+        var gameId = Quizzes.update({_id: gameID}, {"$push":{"players":owner}});
+        return gameId;
+    },
+
+
     mailChangeTurn: function(id){
         //process.env.MAIL_URL="smtp://postmaster@sandbox0cbcbe15c9e346919a24fd77b3bd38d7.mailgun.org:9c92decdffcf3d1b8818e0b4c4afe2ae@smtp.mailgun.org:587/";
         //var inviter = Meteor.userId();
@@ -189,28 +106,7 @@ Meteor.methods({
         });
 
     },
-    insertWinner: function(userid, gamename){
 
-
-
-        var date = new Date()
-        //var wins = 'wins'+ gameid;
-        //var data = {$inc:{wins: 1}};
-        /*var obj = {key: 'value'}; //prints {key: "value"}
-        var obj2 = {};
-        var key = thisgameid;
-        var val = obj2[key] = 1;*/
-        //{someKey: 'someValue'}
-
-        var query = {};
-        var myCustomField = gamename;
-        var myCustomValue = 1;
-        query[myCustomField] = myCustomValue;
-        //console.log('Et object  ' + JSON.stringify(query));
-        Meteor.users.update({_id:userid},{$inc:query});
-
-
-},
     deleteUser: function (userId) {
         var user = Meteor.user();
         if (!user || !Roles.userIsInRole(user, ['admin']))

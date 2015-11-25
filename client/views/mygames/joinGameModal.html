@@ -1,0 +1,35 @@
+<template name="joinGameModal">
+    <div id="jointhegame" class="modal fade modalheight" tabindex="-1" data-width="760" style="display:no">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{> joinGameModalInner}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="joinGameModalInner">
+    <div class="header">
+        <h4>Tilmeld dig til et spil</h4>
+    </div>
+    <p>Her skal du indtaste det spil id du har modtaget fra spil administratoren.</p>
+    <div class="modal-body">
+        <form role="form">
+            <div class="form-group">
+                <div class="alert alert-danger hide" id="hidethealert" role="alert">Indtast en gyldig emailadresse</div>
+                <label for="input-game">Spil-id</label>
+                <div class="input-group">
+                    <!--<span class="input-group-addon">@</span>-->
+                    <input type="text" class="form-control" id="input-game" placeholder="Indtast spil-id">
+                </div>
+            </div>
+        </form>
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Fortryd</button>
+        <button type="button" id="joinagame" class="btn btn-danger">Tilmeld</button>
+    </div>
+</template>
