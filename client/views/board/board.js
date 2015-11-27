@@ -144,6 +144,7 @@ Template.board.events({
         if (teams) {
 
             var numOfPlayers = teams.players.length;
+            alert(teams.players[0])
             //var numOfPlayers = 9;
             var numOfTeams = Math.ceil(numOfPlayers/3);
             var count = 0;
@@ -166,7 +167,7 @@ Template.board.events({
 
              var gameObj = {};
 
-            var makeRandomTeams = makeRandom(1, numOfTeams+1);
+            var makeRandomTeams = makeRandom(0, numOfTeams);
 
 
             console.log('Spillerens id er  ' +  teams.players[0])
@@ -176,6 +177,31 @@ Template.board.events({
                  var x = makeRandomTeams();
                  console.log('så er der random ' + x);
              var thePlayer = Meteor.users.findOne({_id: player})
+              var teamStr = 'team'+ x;
+
+                 switch (x) {
+                     case 0:
+                         Quizzes.update({_id: gameId}, {$push:{team0: thePlayer}})
+                         break;
+                     case 1:
+                         Quizzes.update({_id: gameId}, {$push:{team1: thePlayer}})
+                         break;
+                     case 2:
+                         Quizzes.update({_id: gameId}, {$push:{team2: thePlayer}})
+                         break;
+                     case 3:
+                         Quizzes.update({_id: gameId}, {$push:{team3: thePlayer}})
+                         break;
+                     case 4:
+                         Quizzes.update({_id: gameId}, {$push:{team4: thePlayer}})
+                         break;
+                     case 5:
+                         Quizzes.update({_id: gameId}, {$push:{team5: thePlayer}})
+                         break;
+                     case 6:
+                         Quizzes.update({_id: gameId}, {$push:{team6: thePlayer}})
+                         break;
+                 }
 
 
 
