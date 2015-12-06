@@ -10,25 +10,25 @@
 //var gameId = Session.get("playgame");
 
 /*Meteor.startup(function () {
-    Tracker.autorun(function () {
+ Tracker.autorun(function () {
 
 
-        var griddata = Gamedata.findOne({_id: gameId});
+ var griddata = Gamedata.findOne({_id: gameId});
 
 
-        if (griddata) {
+ if (griddata) {
 
-            var player_1 = griddata.player1_id;
-
-
-
-        }
+ var player_1 = griddata.player1_id;
 
 
 
+ }
 
-    });
-});*/
+
+
+
+ });
+ });*/
 
 Template.board.onRendered(function () {
 
@@ -55,9 +55,6 @@ Template.board.onRendered(function () {
     }
 
 
-
-
-
 });
 
 Template.board.helpers({
@@ -70,37 +67,37 @@ Template.board.helpers({
         //return Session.get('score');
     },
 
-    team: function  (){
+    team: function () {
         var gameId = Session.get("playgame");
 
-       var teams = Quizzes.findOne({_id: gameId});
+        var teams = Quizzes.findOne({_id: gameId});
         //console.log(gameId);
         if (teams) {
 
             var numOfPlayers = teams.players.length;
 
-            var numOfTeams =  Math.ceil(numOfPlayers/3);
+            var numOfTeams = Math.ceil(numOfPlayers / 3);
 
             var count = 0;
 
             var teamName = [];
 
-            for (var i = 0; i< numOfTeams; i++){
+            for (var i = 0; i < numOfTeams; i++) {
 
-                console.log('Hold nummer ' + i+1)
+               // console.log('Hold nummer ' + i + 1)
 
             }
 
             var playername = [];
 
 
-            teams.players.forEach( function (player){
+            teams.players.forEach(function (player) {
                 var thePlayer = Meteor.users.findOne({_id: player})
 
                 playername.push(thePlayer.username);
 
-                console.log('Spiller er' + count +'  '+ player);
-                count +=1;
+                //console.log('Spiller er' + count + '  ' + player);
+                count += 1;
                 //return player;
 
             })
@@ -112,14 +109,11 @@ Template.board.helpers({
         }
 
 
-
     },
     playerlist: function () {
 
 
-
     }
-
 
 
 });
@@ -132,110 +126,78 @@ Template.board.events({
         var gameId = Session.get("playgame");
         var teams = Quizzes.findOne({_id: gameId});
 
-        function makeRandom(min, max) {
-            var random = function() {
-                return Math.floor((Math.random() * (max-min)) + min);
-            };
 
-            return random;
-        }
+
+        function shuffle(arr) {
+            var shuffled = arr.slice(0), i = arr.length, temp, index;
+            while (i--) {
+                index = Math.floor(i * Math.random());
+                temp = shuffled[index];
+                shuffled[index] = shuffled[i];
+                shuffled[i] = temp;
+            }
+            return shuffled;
+        };
 
         //console.log(gameId);
         if (teams) {
 
-            var numOfPlayers = teams.players.length;
-            alert(teams.players[0])
-            //var numOfPlayers = 9;
-            var numOfTeams = Math.ceil(numOfPlayers/3);
-            var count = 0;
-            var teamName = [];
-            for (var i = 0; i< numOfTeams; i++){
+            //var numOfPlayers = teams.players.length;
+            //alert(teams.players[0])
+            var numOfPlayers = 7;
 
-                var gnr = 'team'+i;
-                var gamearr = "games."+ gnr;
+            var remainderOf = numOfPlayers % 3;
+
+            //alert(remainderOf)
+
+            if (remainderOf == 1){
+
+                var numOfTeams = Math.floor(numOfPlayers / 3);
+               // console.log(' number of teams is: ' + numOfTeams)
+            }
+            else {
+                var numOfTeams = Math.ceil(numOfPlayers / 3);
+                //console.log(' number of teams is: ' +  numOfTeams)
+            }
+
+            var randomArray = [];
+            for (var i = 0; i < 3; i++) {
+
+                for (var y = 0; y < 3; y++) {
+                    randomArray.push(y);
+                }
+            }
+
+            for (var i = 0; i < numOfTeams; i++) {
+
+                //create the arrays that holds the players for the current game
+                var gnr = 'team' + i;
+                var gamearr = "games." + gnr;
                 var gameObj = {};
                 gameObj[gnr] = [];
-                //console.log('spilobj '+gameObj)
-               // Quizzes.update({_id: gameId}, {$push:{"games":gnr}});
-
-                Quizzes.update({_id: gameId}, {$set:gameObj});
+                Quizzes.update({_id: gameId}, {$set: gameObj});
 
 
             }
 
-            var gamearr = "games."+ gnr;
+console.log(randomArray)
+            randomArray = shuffle(randomArray);
 
-             var gameObj = {};
+            var counter = 0;
+            teams.players.forEach(function (player) {
 
-            var makeRandomTeams = makeRandom(0, numOfTeams);
+console.log(randomArray[counter])
+                //alert('team' + randomArray[counter])
+                var gnr = 'team' + randomArray[counter];
+                var gameObj = {};
+                gameObj[gnr] = player;
+                Quizzes.update({_id: gameId}, {$push: gameObj})
 
-
-            console.log('Spillerens id er  ' +  teams.players[0])
-
-
-             teams.players.forEach( function (player){
-                 var x = makeRandomTeams();
-                 console.log('så er der random ' + x);
-             var thePlayer = Meteor.users.findOne({_id: player})
-              var teamStr = 'team'+ x;
-
-                 switch (x) {
-                     case 0:
-                         Quizzes.update({_id: gameId}, {$push:{team0: thePlayer}})
-                         break;
-                     case 1:
-                         Quizzes.update({_id: gameId}, {$push:{team1: thePlayer}})
-                         break;
-                     case 2:
-                         Quizzes.update({_id: gameId}, {$push:{team2: thePlayer}})
-                         break;
-                     case 3:
-                         Quizzes.update({_id: gameId}, {$push:{team3: thePlayer}})
-                         break;
-                     case 4:
-                         Quizzes.update({_id: gameId}, {$push:{team4: thePlayer}})
-                         break;
-                     case 5:
-                         Quizzes.update({_id: gameId}, {$push:{team5: thePlayer}})
-                         break;
-                     case 6:
-                         Quizzes.update({_id: gameId}, {$push:{team6: thePlayer}})
-                         break;
-                 }
-
-
-
-             /*gameObj[gamearr] = thePlayer.username;
-
-             console.log('Onjektet er ' + gameObj)
-             Quizzes.update({_id: gameId}, {$push: gameObj});*/
-             //playername.push(thePlayer.username);
-
-             //console.log('Spiller er' + count +'  '+ player);
-             //count +=1;
-             //return player;
-
-             })
-
-            /*var playername = [];
-
-
-            teams.players.forEach( function (player){
-                var thePlayer = Meteor.users.findOne({_id: player})
-                playername.push(thePlayer.username);
-
-                console.log('Spiller er' + count +'  '+ player);
-                count +=1;
-                //return player;
-
+                counter++;
             })
-            return playername;*/
-
-            //console.log('Antal hold: ' + Math.ceil(numOfTeams));
 
 
         }
-
 
 
     },
@@ -249,42 +211,6 @@ Template.board.events({
         var griddata = Gamedata.findOne({_id: gameId});
         var playerTurn = griddata.turn;
 
-
-
-
-    },
-    'change #notifications': function(evt){
-        var thePlayer = Session.get('playerTurn');
-        var gameId = Session.get("playgame");
-
-
-
-        if (evt.target.checked ) {
-            if (thePlayer === "player1") {
-
-                Gamedata.update({_id: gameId}, {$set: {"notificationPla1": true}});
-
-            }
-            else if (thePlayer === "player2") {
-
-                Gamedata.update({_id: gameId}, {$set: {"notificationPla2": true}});
-
-            }
-
-        } else {
-
-            if (thePlayer === "player1") {
-
-                Gamedata.update({_id: gameId}, {$set: {"notificationPla1": false}});
-
-            }
-            else if (thePlayer === "player2") {
-
-                Gamedata.update({_id: gameId}, {$set: {"notificationPla2": false}});
-            }
-
-
-        }
 
     }
 

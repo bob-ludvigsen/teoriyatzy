@@ -8,7 +8,6 @@ Template.gameadmin.helpers({
         return Meteor.userId() === userId;
     },
     theorys: function () {
-
         var theo = Theoretics.find({});
         console.log(theo.count());
         return theo;
